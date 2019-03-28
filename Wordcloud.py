@@ -1,11 +1,17 @@
-import pandas as pd
-import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
-from python_wordcloud import tweet_dumper as td
 from scipy.misc import imread
+import matplotlib.pyplot as plt
+import tweet_dumper as td
+import csv
+import re
 
+df = []
+with open('tweet.csv') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        df = row
 
-df = td.fit('fahmisalmann')
+# df = td.fit('fahmisalmann')
 
 words = ' '.join(df)
 
@@ -16,12 +22,13 @@ no_urls_no_tags = " ".join([word for word in words.split()
                             ])
 
 twitter_mask = imread('Assets/Mask/twitter_mask.png', flatten=True)
+print(twitter_mask.shape)
 wordcloud = WordCloud(
     stopwords=STOPWORDS,
     font_path='Assets/Font/CabinSketch-Bold.ttf',
     background_color='white',
-    width=1800,
-    height=1400,
+    width=twitter_mask.shape[1],
+    height=twitter_mask.shape[0],
     mask=twitter_mask
     ).generate(no_urls_no_tags)
 

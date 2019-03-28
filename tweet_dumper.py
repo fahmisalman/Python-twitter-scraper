@@ -1,4 +1,5 @@
-from python_wordcloud.API_key import *
+from API_key import *
+import csv
 import tweepy
 
 
@@ -23,7 +24,9 @@ def get_all_tweets(screen_name):
         print("...%s tweets downloaded so far" % (len(alltweets)))
 
     outtweets = [str(tweet.text.encode("utf-8")) for tweet in alltweets]
-    print(outtweets)
+    with open('tweet.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerows([outtweets])
 
     return outtweets
 
