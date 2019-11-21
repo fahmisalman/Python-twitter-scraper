@@ -24,7 +24,7 @@ from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
 # Read the whole text.
-text = open(path.join(d, 'conan.rtf')).read()
+text = open(path.join(d, 'conan_short.rtf')).read()
 # text = """
 # The Zen of Python, by Tim Peters
 # Beautiful is better than ugly.
@@ -50,12 +50,13 @@ text = open(path.join(d, 'conan.rtf')).read()
 
 # read the mask / color image taken from
 # http://jirkavinse.deviantart.com/art/quot-Real-Life-quot-Alice-282261010
-alice_coloring = np.array(Image.open(path.join(d, "python.jpg")))
+alice_coloring = np.array(Image.open(path.join(d, "apple.jpg")))
 stopwords = set(STOPWORDS)
 stopwords.add("said")
+font = 'Assets/Font/CabinSketch-Bold.ttf'
 
 wc = WordCloud(background_color="white", max_words=2000, mask=alice_coloring,
-               stopwords=stopwords, max_font_size=40, random_state=42)
+               stopwords=stopwords, max_font_size=72, random_state=42, font_path=font)
 # generate word cloud
 wc.generate(text)
 
@@ -72,4 +73,7 @@ image_colors = ImageColorGenerator(alice_coloring)
 plt.imshow(wc.recolor(color_func=image_colors), interpolation="bilinear")
 # for ax in axes:
 #     ax.set_axis_off()
+plt.axis('off')
+plt.savefig('Output/{}.png'.format('apple'), dpi=300)
 plt.show()
+
